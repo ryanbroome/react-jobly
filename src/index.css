@@ -9,7 +9,7 @@ body {
   padding: 0;
   height: 100vh;
   overflow: scroll;
-  background: url("./images/boliviainteligente-Fk7D4BqI0sU-unsplash.jpg") no-repeat;
+  background: url("./images/boliviainteligente-Fk7D4BqI0sU-unsplash.jpg");
   background-size: cover;
 }
 

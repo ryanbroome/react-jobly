@@ -3,10 +3,11 @@ import { Route, Switch } from "react-router-dom";
 
 import HomePage from "./HomePage";
 import CompanyList from "./CompanyList";
-import CompanyCard from "./CompanyCard";
+// import CompanyCard from "./CompanyCard";
+
 import CompanyDetail from "./CompanyDetail";
-import JobCardList from "./JobCardList";
-import JobCard from "./JobCard";
+import JobList from "./JobList";
+import JobCard from "./JobCardList";
 import Stage from "./Stage";
 
 import LoginForm from "./LoginForm";
@@ -42,7 +43,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/jobs">
-        <JobCardList />
+        <JobList />
       </Route>
 
       <Route

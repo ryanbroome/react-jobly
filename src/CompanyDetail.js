@@ -4,9 +4,13 @@ import { Link, useParams } from "react-router-dom";
 import JoblyApi from "./api/Api";
 
 function CompanyDetail({ search }) {
+  // use URL handle to make API request
   const { handle } = useParams();
+
+  // state to hold company data
   const [company, setCompany] = useState(null);
 
+  // fetches data on initial load for company
   useEffect(function fetchCompanyWhenMounted() {
     async function fetchCompany() {
       const res = await JoblyApi.getCompany(handle);

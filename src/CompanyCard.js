@@ -1,43 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-
-//// import JoblyApi from "./api/Api";
+import React from "react";
+import { Link } from "react-router-dom";
 
 function CompanyCard({ company }) {
-  // const { handle } = useParams();
-  //// const [company, setCompany] = useState(null);
-
-  ////useEffect(function fetchCompanyWhenMounted() {
-  ////  async function fetchCompany() {
-  ////    const res = await JoblyApi.getCompany(handle);
-  ////    setCompany(res);
-  ////  }
-  ////  fetchCompany();
-  ////}, []);
-
+  // TODO include and use reactstrap for styling components or other styling library
   return (
     <div>
-      <div>
-        <dl>
-          <dt>Company</dt>
-          <dd>{company.name}</dd>
-          <dt>Employees</dt>
-          <dd>{company.numEmployees}</dd>
-          <dt>Description</dt>
-          <dd>{company.description}</dd>
-        </dl>
-
-        {/* Jobs List for this Company PULL OUT INTO JobsList Component*/}
-        {company.jobs.length > 0 ? (
-          <ul>
-            {company.jobs.map((j) => (
-              <li>{j.title}</li>
-            ))}
-          </ul>
-        ) : (
-          "No Jobs for this Company to render"
-        )}
-      </div>
+      <Link to={`companies/${company.handle}`}>{company.handle}</Link>
+      <dl>
+        <dt>Name</dt>
+        <dd>{company.name}</dd>
+        <dt>Employees</dt>
+        <dd>{company.numEmployees}</dd>
+        <dt>Description</dt>
+        <dd>{company.description}</dd>
+      </dl>
     </div>
   );
 }

@@ -60,6 +60,12 @@ class JoblyApi {
     return res.jobs;
   }
 
+  /**Get filtered list of companies */
+  static async searchJobs(searchTerm = "") {
+    let res = await this.request(`jobs`, { title: searchTerm });
+    return res.jobs;
+  }
+
   static async getJobs(id) {
     let res = await this.request(`jobs/${id}`, { query: id });
     return res.job;

@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FormGroup, Form, Input, Label, Button } from "reactstrap";
 import "./SearchForm.css";
 
 const SearchForm = ({ search }) => {
-  const [searchTerm, setSearchTerm] = useState(null);
-
   const INITIAL_STATE = {
     searchTerm: "",
   };
@@ -21,24 +19,13 @@ const SearchForm = ({ search }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // filterCompanies(formData.searchTerm);
-    setSearchTerm(searchTerm);
+    search(formData.searchTerm);
     setFormData({ searchTerm: "" });
   };
 
-  useEffect(
-    function () {
-      async function searchCompany() {
-        search(searchTerm);
-      }
-      searchCompany(searchTerm);
-    },
-    [searchTerm]
-  );
-
   return (
     <form onSubmit={handleSubmit}>
-      <h3>Filter Companies</h3>
+      <h3>Search</h3>
       {Object.keys(INITIAL_STATE).map((val) => (
         <FormGroup key={`FormGroup-${val}`}>
           <label

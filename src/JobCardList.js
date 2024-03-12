@@ -1,42 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import JoblyApi from "./api/Api";
 
-function JobCardList() {
-  const [jobs, setJobs] = useState(null);
+function JobCard() {
+  const [job, setJob] = useState(null);
 
-  //   effect to fetch Jobs
-  useEffect(function fetchJobsWhenMounted() {
-    async function fetchJobs() {
-      const jobsResult = await JoblyApi.getAllJobs();
-      setJobs(jobsResult);
-    }
-    fetchJobs();
-  }, []);
+  const { id } = useParams();
+  const history = useHistory();
+
+  useEffect(
+    function () {
+      async function getJobById(id) {
+        const job = await JoblyApi.getJobs(id);
+        console.log("job", job);
+        setJob(job);
+      }
+      getJobById(id);
+    },
+    [id]
+  );
+
+  const goBack = () => {
+    history.push(`/jobs`);
+  };
 
   return (
     <div>
-      <h1>Jobs List</h1>
-      {jobs ? (
+      {job ? (
         <div>
-          <ul>
-            {jobs.map((job, idx) => (
-              <li key={job.id}>
-                <Link
-                  to={`/jobs/${job.id}`}
-                  exact>
-                  {job.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <h3>{job.company_handle.toUpperCase()}</h3>
+          <dl>
+            <dt>Title</dt>
+            <dd>{job.title}</dd>
+            <dt>Salary</dt>
+            <dd>{job.salary}</dd>
+            <dt>Equity</dt>
+            <dd>{job.equity}</dd>
+          </dl>
+          <button onClick={goBack}>All Jobs</button>
         </div>
       ) : (
-        <i>loading</i>
+        "Loading"
       )}
     </div>
   );
 }
 
-// TODO I'm working on the API calls first gotta get those working. Should be using all able routes.
-export default JobCardList;
+export default JobCard;
