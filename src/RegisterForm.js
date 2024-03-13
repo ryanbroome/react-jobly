@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { FormGroup, Form, Input, Label, Button } from "reactstrap";
 
-const LoginForm = ({ login }) => {
+const RegisterForm = ({ register }) => {
   // const {variable} = useParams()
   const history = useHistory();
 
@@ -29,12 +29,12 @@ const LoginForm = ({ login }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateStateMethod({...formData})
-    console.log("LOGIN FORM SUBMITTED:", { ...formData });
+    register(formData.username, formData.firstName, formData.lastName, formData.password, formData.email);
+    console.log("REGISTER  FORM SUBMITTED:", { ...formData });
 
     setFormData(INITIAL_STATE);
     // Do I need to redirect?
-    // history.push(`/`);
+    history.push(`/`);
   };
 
   return (
@@ -62,4 +62,4 @@ const LoginForm = ({ login }) => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

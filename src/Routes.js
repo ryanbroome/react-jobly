@@ -3,18 +3,14 @@ import { Route, Switch } from "react-router-dom";
 
 import HomePage from "./HomePage";
 import CompanyList from "./CompanyList";
-// import CompanyCard from "./CompanyCard";
 
 import CompanyDetail from "./CompanyDetail";
 import JobList from "./JobList";
-// import JobCard from "./JobCardList";
 import Stage from "./Stage";
 
 import LoginForm from "./LoginForm";
-import SignupForm from "./SignupForm";
+import RegisterForm from "./RegisterForm";
 import ProfileForm from "./ProfileForm";
-
-// import JoblyApi from "./api/Api";
 
 const Routes = (props) => {
   return (
@@ -63,7 +59,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/signup">
-        <SignupForm />
+        <RegisterForm register={props.register} />
       </Route>
 
       <Route

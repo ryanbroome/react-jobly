@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import { FormGroup, Form, Input, Label, Button } from "reactstrap";
 
 const LoginForm = ({ login }) => {
-  // const {variable} = useParams()
   const history = useHistory();
 
   const INITIAL_STATE = {
@@ -27,8 +26,8 @@ const LoginForm = ({ login }) => {
     e.preventDefault();
     login(formData.username, formData.password);
     setFormData(INITIAL_STATE);
-    //todo  Change the Client history to take them to the new list including their added item
-    // history.push(`/`);
+    //todo  Change the Client history / re-direct
+    history.push(`/`);
   };
 
   return (

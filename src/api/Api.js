@@ -72,9 +72,15 @@ class JoblyApi {
     return res.job;
   }
 
-  // TODO left off here, writing API call to get token, need to send username, password in the req.body
+  // Post Login / validate user
   static async validateUser(username, password) {
     let res = await this.request("auth/token", { username: username, password: password }, "post");
+    return res;
+  }
+
+  //Post / register
+  static async registerUser(username, firstName, lastName, password, email) {
+    let res = await this.request("auth/register", { username, firstName, lastName, password, email }, "post");
     return res;
   }
 }

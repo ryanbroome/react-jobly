@@ -6,15 +6,12 @@ import "./App.css";
 import Routes from "./Routes";
 import Navigation from "./Navigation";
 import JoblyApi from "./api/Api";
-// import LoginForm from "./LoginForm";
 import userContext from "./userContext";
 
 function App() {
   const [token, setToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [validUser, setValidUser] = useState(null);
-
-  // const [infoLoaded, setInfoLoaded] = useState(null);
 
   const decodeToken = (token) => {
     const user = jwtDecode(token);
@@ -25,9 +22,15 @@ function App() {
     function fetchUser() {
       async function validateUser() {
         try {
-          const res = await JoblyApi.validateUser(currentUser.username, currentUser.password);
-          setToken(res.token);
-          setValidUser(decodeToken(res.token));
+          if (Object.keys(currentUser).length > 2) {
+            const res = await JoblyApi.registerUser(currentUser.username, currentUser.firstName, currentUser.lastName, currentUser.password, currentUser.email);
+            setToken(res.token);
+            setValidUser(decodeToken(res.token));
+          } else {
+            const res = await JoblyApi.validateUser(currentUser.username, currentUser.password);
+            setToken(res.token);
+            setValidUser(decodeToken(res.token));
+          }
         } catch (err) {
           console.log(err);
         }
@@ -49,8 +52,20 @@ function App() {
   const logout = () => {
     setValidUser(null);
   };
+
   // method to register a new user
-  const register = () => {};
+  const register = (username, firstName, lastName, password, email) => {
+    setCurrentUser({
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      password: password,
+      email: email,
+    });
+  };
+  console.log("TOKEN => ", token);
+  console.log("CURRENTUSER =>", currentUser);
+  console.log("VALIDUSER =>", validUser);
 
   return (
     <div className="App">
@@ -58,7 +73,10 @@ function App() {
         <Navigation logout={logout} />
       </userContext.Provider>
 
-      <Routes login={login} />
+      <Routes
+        login={login}
+        register={register}
+      />
 
       {/* {currentUser === null ? <LoginForm login={login} /> : "Logged In"} */}
     </div>
