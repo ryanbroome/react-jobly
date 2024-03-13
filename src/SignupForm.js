@@ -17,6 +17,7 @@ const LoginForm = ({ login }) => {
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
+  const [formErrors, setFormErrors] = useState();
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -37,13 +37,6 @@ function App() {
     [currentUser]
   );
 
-  console.log("token =>", token);
-  console.log("currentUser =>", currentUser);
-  console.log("validUser =>", validUser);
-
-  // todo complete this
-  // when jobs rendered make a ternary that checks a value in userContext, if true returns "has applied in job card" if not render an apply button, apply button will change piece of context hasApplied to true" that way when all jobs are re-rendered will show as applied to any job in that context.
-
   // method to login / trigger a validate post request of user input username, password
   const login = (username, password) => {
     setCurrentUser({
@@ -56,6 +49,8 @@ function App() {
   const logout = () => {
     setValidUser(null);
   };
+  // method to register a new user
+  const register = () => {};
 
   return (
     <div className="App">

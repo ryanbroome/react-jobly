@@ -64,24 +64,26 @@ function Navigation({ logout }) {
         </NavItem>
 
         {validUser ? (
-          <button onClick={logout}>Logout {validUser.username}</button>
+          <button onClick={logout}>Logout {validUser.username.toLowerCase()}</button>
         ) : (
-          <NavItem>
-            <NavLink
-              exact
-              to="/login">
-              🔐 Login
-            </NavLink>
-          </NavItem>
+          <>
+            <NavItem>
+              <NavLink
+                exact
+                to="/login">
+                🔐 Login
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                exact
+                to="/signup">
+                Signup
+              </NavLink>
+            </NavItem>
+          </>
         )}
         {/* Adjust to use logic for "valid user" to show / hide signup and other Navigation bar Elements */}
-        <NavItem>
-          <NavLink
-            exact
-            to="/signup">
-            Signup
-          </NavLink>
-        </NavItem>
       </Nav>
     </Navbar>
   );
