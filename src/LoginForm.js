@@ -27,7 +27,7 @@ const LoginForm = ({ login }) => {
     e.preventDefault();
 
     console.log("LOGIN FORM SUBMITTED:", { ...formData });
-
+    login(formData.username, formData.password);
     setFormData(INITIAL_STATE);
     //todo  Change the Client history to take them to the new list including their added item
     // history.push(`/`);

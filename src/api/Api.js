@@ -47,7 +47,7 @@ class JoblyApi {
     let res = await this.request(`companies`);
     return res.companies;
   }
-  // TODO LEFT OFF HERE, BUILDING SEARCH FORM TO FILTER COMPANIES
+
   /**Get filtered list of companies */
   static async searchCompanies(searchTerm = "") {
     let res = await this.request(`companies`, { name: searchTerm });
@@ -66,9 +66,16 @@ class JoblyApi {
     return res.jobs;
   }
 
+  // Get Job By id
   static async getJobs(id) {
     let res = await this.request(`jobs/${id}`, { query: id });
     return res.job;
+  }
+
+  // TODO left off here, writing API call to get token, need to send username, password in the req.body
+  static async validateUser(username, password) {
+    let res = await this.request("auth/token", { username: username, password: password }, "post");
+    return res;
   }
 }
 

@@ -57,7 +57,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/login">
-        <LoginForm />
+        <LoginForm login={props.login} />
       </Route>
 
       <Route
