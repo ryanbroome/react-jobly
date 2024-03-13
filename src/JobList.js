@@ -1,23 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-
 import JoblyApi from "./api/Api";
 import SearchForm from "./SearchForm";
 import JobCardList from "./JobCardList";
 
-// Route "/jobs" => list of all jobs by rendering a card list JobCardList
 function JobList() {
   const [jobs, setJobs] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
-
-  ////   effect to fetch All Jobs
-  // useEffect(function fetchJobsWhenMounted() {
-  //   async function fetchJobs() {
-  //     const jobsResult = await JoblyApi.getAllJobs();
-  //     setJobs(jobsResult);
-  //   }
-  //   fetchJobs();
-  // }, []);
 
   // *Fetch data at load, and anytime searchTerm changes from searchForm
   useEffect(
@@ -32,12 +20,12 @@ function JobList() {
     [searchTerm]
   );
 
-  // method to make another filtered API call
+  //* method to make another filtered API call
   const searchJobs = (searchTerm) => {
     setSearchTerm(searchTerm);
   };
 
-  // method to reset to all jobs
+  // *method to reset to all jobs
   const resetList = () => {
     setSearchTerm("");
   };
@@ -50,23 +38,7 @@ function JobList() {
         resetList={resetList}
       />
       <button onClick={resetList}>Reset</button>
-      {jobs ? (
-        <div>
-          <ul>
-            {jobs.map((job, idx) => (
-              <li key={job.id}>
-                <Link
-                  to={`/jobs/${job.id}`}
-                  exact>
-                  {job.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <i>loading</i>
-      )}
+      {jobs ? <JobCardList jobs={jobs} /> : <i>No Jobs found</i>}
     </div>
   );
 }

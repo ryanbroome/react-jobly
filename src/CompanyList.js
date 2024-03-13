@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 import JoblyApi from "./api/Api";
 import SearchForm from "./SearchForm";
@@ -9,7 +8,7 @@ function CompanyList() {
   const [companies, setCompanies] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
 
-  // Fetch data at load, and anytime searchTerm changes from searchForm
+  //* Fetch companies at load, and anytime searchTerm changes coming back up from searchForm
   useEffect(
     function fetchCompanies() {
       async function filterCompanies() {
@@ -22,34 +21,29 @@ function CompanyList() {
     [searchTerm]
   );
 
-  // method to filterCompanies companies
+  //* method to filterCompanies companies
   const searchCompanies = (searchTerm) => {
     setSearchTerm(searchTerm);
   };
 
-  // method to reset companies to full list
+  //* method to reset companies to full list
   const resetList = () => {
     setSearchTerm("");
   };
 
   return (
     <div>
-      <h1>Matching Companies: {companies ? companies.length : "Loading"}</h1>
+      <h1 className="CompanyList">Companies List</h1>
       <SearchForm
         search={searchCompanies}
         resetList={resetList}
       />
-      {/* Companies List Map and Create new CompanyCard by passing each Company to Company Card component */}
       {companies ? (
         <div>
           <button onClick={resetList}>Reset</button>
-          <ul>
-            {companies.map((company) => (
-              <li key={company.name}>
-                <CompanyCard company={company} />
-              </li>
-            ))}
-          </ul>
+          {companies.map((company) => (
+            <CompanyCard company={company} />
+          ))}
         </div>
       ) : (
         <i>loading</i>
@@ -59,15 +53,3 @@ function CompanyList() {
 }
 
 export default CompanyList;
-
-/** UNUSED RE-FACTORED CODE
- * 
- *  useEffect(function fetchCompaniesWhenMounted() {
-  //  / async function fetchCompanies() {
-  //    const companyResult = await JoblyApi.getCompanies();
-  //    setCompanies(companyResult);
-  //  }
-  //  fetchCompanies();
-  ///}, []); 
- * 
- * **/

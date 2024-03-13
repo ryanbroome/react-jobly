@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import JobCard from "./JobCard";
 
 import JoblyApi from "./api/Api";
 
-function CompanyDetail({ search }) {
+function CompanyDetail() {
   // use URL handle to make API request
   const { handle } = useParams();
 
@@ -13,8 +14,12 @@ function CompanyDetail({ search }) {
   // fetches data on initial load for company
   useEffect(function fetchCompanyWhenMounted() {
     async function fetchCompany() {
-      const res = await JoblyApi.getCompany(handle);
-      setCompany(res);
+      try {
+        const res = await JoblyApi.getCompany(handle);
+        setCompany(res);
+      } catch (err) {
+        console.log(err);
+      }
     }
     fetchCompany();
   }, []);
@@ -34,7 +39,7 @@ function CompanyDetail({ search }) {
           {company.jobs.length > 0 ? (
             <ul>
               {company.jobs.map((j) => (
-                <li>{j.title}</li>
+                <JobCard job={j} />
               ))}
             </ul>
           ) : (
@@ -42,7 +47,7 @@ function CompanyDetail({ search }) {
           )}
         </div>
       ) : (
-        "Loading"
+        "Loading Company"
       )}
     </div>
   );

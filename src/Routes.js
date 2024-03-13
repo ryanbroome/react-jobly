@@ -46,12 +46,6 @@ const Routes = (props) => {
         <JobList />
       </Route>
 
-      <Route
-        exact
-        path="/jobs/:id">
-        <JobCard />
-      </Route>
-
       {/* Stage / Practice routes */}
       <Route
         exact

@@ -4,7 +4,7 @@ import "./SearchForm.css";
 
 const SearchForm = ({ search }) => {
   const INITIAL_STATE = {
-    searchTerm: "",
+    searchTerm: null,
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
