@@ -1,7 +1,7 @@
 // TODO Login will check the database for a user to see if that username exists, if so take the password they entered and bcrypt hash it or bcrypt verify it matches the hashed PW should be saved in DB associated with their username, may need to add some methods to our JoblyApi class to accomplish then can just call those methods.
 
 import React, { useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { FormGroup, Form, Input, Label, Button } from "reactstrap";
 
 const LoginForm = ({ login }) => {
@@ -25,8 +25,6 @@ const LoginForm = ({ login }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log("LOGIN FORM SUBMITTED:", { ...formData });
     login(formData.username, formData.password);
     setFormData(INITIAL_STATE);
     //todo  Change the Client history to take them to the new list including their added item

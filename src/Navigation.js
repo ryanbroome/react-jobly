@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Navigation.css";
 import { NavLink } from "react-router-dom";
 import { Navbar, Nav, NavItem } from "reactstrap";
+import userContext from "./userContext";
 
 /**  <Navigation />
  *
@@ -14,6 +15,8 @@ import { Navbar, Nav, NavItem } from "reactstrap";
  * **/
 
 function Navigation({ logout }) {
+  const { validUser } = useContext(userContext);
+
   return (
     <Navbar expand="md">
       <Nav
@@ -60,14 +63,18 @@ function Navigation({ logout }) {
           </NavLink>
         </NavItem>
 
-        <NavItem>
-          <NavLink
-            exact
-            to="/login">
-            🔐 Login
-          </NavLink>
-        </NavItem>
-
+        {validUser ? (
+          <button onClick={logout}>Logout {validUser.username}</button>
+        ) : (
+          <NavItem>
+            <NavLink
+              exact
+              to="/login">
+              🔐 Login
+            </NavLink>
+          </NavItem>
+        )}
+        {/* Adjust to use logic for "valid user" to show / hide signup and other Navigation bar Elements */}
         <NavItem>
           <NavLink
             exact
