@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import JoblyApi from "./api/Api";
 import SearchForm from "./SearchForm";
 import JobCardList from "./JobCardList";
 
+import { useHistory } from "react-router-dom";
+import userContext from "./userContext";
+
 function JobList() {
+  const history = useHistory();
+  const { validUser } = useContext(userContext);
+
   const [jobs, setJobs] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
 
@@ -32,13 +38,19 @@ function JobList() {
 
   return (
     <div>
-      <h1>Jobs List</h1>
-      <SearchForm
-        search={searchJobs}
-        resetList={resetList}
-      />
-      <button onClick={resetList}>Reset</button>
-      {jobs ? <JobCardList jobs={jobs} /> : <i>No Jobs found</i>}
+      {validUser ? (
+        <div className="JobList">
+          <h1>Jobs List</h1>
+          <SearchForm
+            search={searchJobs}
+            resetList={resetList}
+          />
+          <button onClick={resetList}>Reset</button>
+          {jobs ? <JobCardList jobs={jobs} /> : <i>No Jobs found</i>}
+        </div>
+      ) : (
+        history.push("/")
+      )}
     </div>
   );
 }

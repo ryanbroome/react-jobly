@@ -26,10 +26,12 @@ function App() {
             const res = await JoblyApi.registerUser(currentUser.username, currentUser.firstName, currentUser.lastName, currentUser.password, currentUser.email);
             setToken(res.token);
             setValidUser(decodeToken(res.token));
+            JoblyApi.token = res.token;
           } else {
             const res = await JoblyApi.validateUser(currentUser.username, currentUser.password);
             setToken(res.token);
             setValidUser(decodeToken(res.token));
+            JoblyApi.token = res.token;
           }
         } catch (err) {
           console.log(err);
@@ -63,22 +65,16 @@ function App() {
       email: email,
     });
   };
-  console.log("TOKEN => ", token);
-  console.log("CURRENTUSER =>", currentUser);
-  console.log("VALIDUSER =>", validUser);
 
   return (
     <div className="App">
       <userContext.Provider value={{ validUser }}>
         <Navigation logout={logout} />
+        <Routes
+          login={login}
+          register={register}
+        />
       </userContext.Provider>
-
-      <Routes
-        login={login}
-        register={register}
-      />
-
-      {/* {currentUser === null ? <LoginForm login={login} /> : "Logged In"} */}
     </div>
   );
 }

@@ -18,74 +18,76 @@ function Navigation({ logout }) {
   const { validUser } = useContext(userContext);
 
   return (
-    <Navbar expand="md">
-      <Nav
-        className="ml-auto"
-        navbar>
-        <NavItem>
-          <NavLink
-            exact
-            to="/"
-            className="navbar-brand">
-            Jobly
-          </NavLink>
-        </NavItem>
+    <>
+      <Navbar expand="md">
+        <Nav
+          className="ml-auto"
+          navbar>
+          {/* Home Route Link*/}
+          <NavItem>
+            <NavLink
+              exact
+              to="/"
+              className="navbar-brand">
+              Jobly
+            </NavLink>
+          </NavItem>
 
-        <NavItem>
-          <NavLink
-            exact
-            to="/profile">
-            Profile
-          </NavLink>
-        </NavItem>
+          {validUser ? (
+            <>
+              <NavItem>
+                <NavLink
+                  exact
+                  to="/profile">
+                  Profile
+                </NavLink>
+              </NavItem>
 
-        <NavItem>
-          <NavLink
-            exact
-            to="/companies">
-            Companies
-          </NavLink>
-        </NavItem>
+              <NavItem>
+                <NavLink
+                  exact
+                  to="/companies">
+                  Companies
+                </NavLink>
+              </NavItem>
 
-        <NavItem>
-          <NavLink
-            exact
-            to="/jobs">
-            Jobs
-          </NavLink>
-        </NavItem>
+              <NavItem>
+                <NavLink
+                  exact
+                  to="/jobs">
+                  Jobs
+                </NavLink>
+              </NavItem>
+              <button
+                className="Navigation-Logout"
+                onClick={logout}>
+                {" "}
+                Logout
+              </button>
+              <h5>{validUser.username}</h5>
+            </>
+          ) : (
+            <>
+              <NavItem>
+                <NavLink
+                  exact
+                  to="/login">
+                  🔐 Login
+                </NavLink>
+              </NavItem>
 
-        <NavItem>
-          <NavLink
-            exact
-            to="/stage">
-            Stage
-          </NavLink>
-        </NavItem>
-
-        {validUser ? (
-          <button onClick={logout}>Logout {validUser.username.toLowerCase()}</button>
-        ) : (
-          <>
-            <NavItem>
-              <NavLink
-                exact
-                to="/login">
-                🔐 Login
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                exact
-                to="/signup">
-                Signup
-              </NavLink>
-            </NavItem>
-          </>
-        )}
-        {/* Adjust to use logic for "valid user" to show / hide signup and other Navigation bar Elements */}
-      </Nav>
-    </Navbar>
+              <NavItem>
+                <NavLink
+                  exact
+                  to="/signup">
+                  Signup
+                </NavLink>
+              </NavItem>
+            </>
+          )}
+        </Nav>
+      </Navbar>
+    </>
   );
 }
 
