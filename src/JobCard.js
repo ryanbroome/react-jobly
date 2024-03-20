@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import userContext from "./userContext";
 
 function JobCard({ job }) {
+  const { apply, validUser } = useContext(userContext);
   return (
     <div
       className="JobCard"
@@ -13,6 +15,12 @@ function JobCard({ job }) {
       <div>
         <small>{job.equity}</small>
       </div>
+      <button
+        onClick={() => {
+          apply(validUser.username, job.id);
+        }}>
+        Apply Now
+      </button>
     </div>
   );
 }

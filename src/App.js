@@ -13,6 +13,7 @@ function App() {
   const [token, setToken] = useState(() => localStorage.getItem("token") || null);
   const [validUser, setValidUser] = useState(() => JSON.parse(localStorage.getItem("validUser")) || null);
   const [userDetails, setUserDetails] = useState(() => JSON.parse(localStorage.getItem("userDetails")) || null);
+  const [appliedJobs, setAppliedJobs] = useState(() => JSON.parse(localStorage.getItem("appliedJobs")) || null);
 
   JoblyApi.token = token;
 
@@ -77,6 +78,16 @@ function App() {
     history.push(`/`);
   };
 
+  const handleApply = async (username, id) => {
+    const res = await JoblyApi.applyToJob(username, id);
+    console.log(res);
+    if (res.applied) {
+      setAppliedJobs(new Set([...appliedJobs, res.applied]));
+    }
+    console.log("App => handleApply => res.applied", res.applied);
+    localStorage.setItem("appliedJobs", appliedJobs);
+  };
+
   return (
     <div className="App">
       <userContext.Provider value={{ validUser, token, userDetails }}>
@@ -85,6 +96,7 @@ function App() {
           login={handleLogin}
           signup={handleSignup}
           update={handleUpdate}
+          apply={handleApply}
         />
       </userContext.Provider>
     </div>
@@ -92,6 +104,6 @@ function App() {
 }
 
 export default App;
-
+// * TODO LEFT OFF WORKING ON APPLY TO JOBS , APPLY SHOULD BE IN CONTEXT BUT ISN"T MAKING IT TO JobCard
 // TODO
 // todo 1 update JSX return statements. Can make functions like isLoggedIn() that returns JSX you want to see when someone is logged in and loggedOut() that just returns JSX you want to see when no valid user is present in context pieces of state

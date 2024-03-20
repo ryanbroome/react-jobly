@@ -8,7 +8,8 @@ import userContext from "./userContext";
 
 function JobList() {
   const history = useHistory();
-  const { token } = useContext(userContext);
+  const { token, apply } = useContext(userContext);
+
   const [jobs, setJobs] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
 
