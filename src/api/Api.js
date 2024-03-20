@@ -89,7 +89,7 @@ class JoblyApi {
     let res = await this.request(`users/${username}`, data, "patch");
     return res;
   }
-  // Get / users/:username => { un, first, last, email, isAdmin }
+  // Get user by username
   static async getUser(username) {
     let res = await this.request(`users/${username}`, "get");
     console.log("API CALL getUser => this.token", this.token);

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { FormGroup, Form, Input, Label, Button } from "reactstrap";
+import { FormGroup } from "reactstrap";
 import "./SearchForm.css";
 
 const SearchForm = ({ search }) => {
   const INITIAL_STATE = {
     searchTerm: "",
-    // searchTerm: null,
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);

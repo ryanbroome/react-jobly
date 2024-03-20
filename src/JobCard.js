@@ -1,7 +1,6 @@
 import React from "react";
 
 function JobCard({ job }) {
-  // TODO make pretty with react strap
   return (
     <div
       className="JobCard"

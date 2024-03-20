@@ -25,7 +25,7 @@ const HomePage = () => {
   } else
     return (
       <div className="HomePage-User">
-        <h1 className="HomePage-User-Title">Welcome to Jobly {validUser ? validUser.username : "no Valid user"}</h1>
+        <h1 className="HomePage-User-Title">Welcome to Jobly {validUser ? validUser.username : "Well something must be broken if your seeing this"}</h1>
 
         {/* <h3 className="HomePage-User-Title">Admin : {validUser.isAdmin ? "Yes" : "No"}</h3> */}
         <ul className="HomePage-User-List">

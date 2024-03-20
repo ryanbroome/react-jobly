@@ -4,26 +4,18 @@ import { NavLink } from "react-router-dom";
 import { Navbar, Nav, NavItem } from "reactstrap";
 import userContext from "./userContext";
 
-/**  <Navigation />
+/**Navigation Component to render a NavBar, different Items rendered based on if logged in user present
  *
- * Renders react strap styling components to create a navigation bar for the App
- *
- * props: {  }
- *
- * Displays Navigation NavLinks for [ HomePage, CompaniesList, JobCardList, LoginForm, RegisterForm  ] routes
- * Displays Number( Snacks/Drinks )
  * **/
+const Navigation = ({ logout }) => {
+  const { token } = useContext(userContext);
 
-function Navigation({ logout }) {
-  const { validUser, token } = useContext(userContext);
-
-  return (
-    <>
+  function isLoggedIn() {
+    return (
       <Navbar expand="md">
         <Nav
           className="ml-auto"
           navbar>
-          {/* Home Route Link*/}
           <NavItem>
             <NavLink
               exact
@@ -33,62 +25,76 @@ function Navigation({ logout }) {
             </NavLink>
           </NavItem>
 
-          {token ? (
-            <>
-              <NavItem>
-                <NavLink
-                  exact
-                  to="/profile">
-                  Profile
-                </NavLink>
-              </NavItem>
+          <NavItem>
+            <NavLink
+              exact
+              to="/profile">
+              Profile
+            </NavLink>
+          </NavItem>
 
-              <NavItem>
-                <NavLink
-                  exact
-                  to="/companies">
-                  Companies
-                </NavLink>
-              </NavItem>
+          <NavItem>
+            <NavLink
+              exact
+              to="/companies">
+              Companies
+            </NavLink>
+          </NavItem>
 
-              <NavItem>
-                <NavLink
-                  exact
-                  to="/jobs">
-                  Jobs
-                </NavLink>
-              </NavItem>
-              <button
-                className="Navigation-Logout"
-                onClick={logout}>
-                Logout
-              </button>
-              {/* <h5>{validUser.username}</h5> */}
-            </>
-          ) : (
-            <>
-              <NavItem>
-                <NavLink
-                  exact
-                  to="/login">
-                  🔐 Login
-                </NavLink>
-              </NavItem>
-
-              <NavItem>
-                <NavLink
-                  exact
-                  to="/signup">
-                  Signup
-                </NavLink>
-              </NavItem>
-            </>
-          )}
+          <NavItem>
+            <NavLink
+              exact
+              to="/jobs">
+              Jobs
+            </NavLink>
+          </NavItem>
+          <button
+            className="Navigation-Logout"
+            onClick={logout}>
+            Logout
+          </button>
         </Nav>
       </Navbar>
-    </>
-  );
-}
+    );
+  }
+
+  function loggedOut() {
+    return (
+      <Navbar expand="md">
+        <Nav
+          className="ml-auto"
+          navbar>
+          <NavItem>
+            <NavLink
+              exact
+              to="/"
+              className="navbar-brand">
+              Jobly
+            </NavLink>
+          </NavItem>
+
+          <NavItem>
+            <NavLink
+              exact
+              to="/login">
+              🔐 Login
+            </NavLink>
+          </NavItem>
+
+          <NavItem>
+            <NavLink
+              exact
+              to="/signup">
+              Signup
+            </NavLink>
+          </NavItem>
+        </Nav>
+      </Navbar>
+    );
+  }
+
+  return token ? isLoggedIn() : loggedOut();
+};
 
 export default Navigation;
 

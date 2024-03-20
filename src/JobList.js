@@ -8,16 +8,14 @@ import userContext from "./userContext";
 
 function JobList() {
   const history = useHistory();
-  const { validUser, token } = useContext(userContext);
+  const { token } = useContext(userContext);
   const [jobs, setJobs] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
 
-  // *Fetch data at load, and anytime searchTerm changes from searchForm
   useEffect(
     function fetchJobs() {
       async function filterJobs() {
         const filteredRes = await JoblyApi.searchJobs(searchTerm);
-        console.log("useEffect JOBS searchTerm", searchTerm);
         setJobs(filteredRes);
       }
       filterJobs();
@@ -25,17 +23,14 @@ function JobList() {
     [searchTerm]
   );
 
-  //* method to make another filtered API call
   const searchJobs = (searchTerm) => {
     setSearchTerm(searchTerm);
   };
 
-  // *method to reset to all jobs
   const resetList = () => {
     setSearchTerm(null);
   };
 
-  // validUser ? return
   if (!token) {
     history.push("/");
     return null;

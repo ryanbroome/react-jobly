@@ -12,11 +12,10 @@ import userContext from "./userContext";
  * **/
 function CompanyList() {
   const history = useHistory();
-  const { validUser, token } = useContext(userContext);
+  const { token } = useContext(userContext);
   const [companies, setCompanies] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
 
-  //* Fetch companies at load, and anytime searchTerm changes coming back up from searchForm
   useEffect(
     function fetchCompanies() {
       async function filterCompanies() {
@@ -32,12 +31,10 @@ function CompanyList() {
     [searchTerm]
   );
 
-  //* method to filterCompanies companies
   const searchCompanies = (searchTerm) => {
     setSearchTerm(searchTerm);
   };
 
-  //* method to reset companies to full list
   const resetList = () => {
     setSearchTerm("");
   };

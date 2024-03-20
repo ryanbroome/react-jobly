@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function CompanyCard({ company }) {
-  // TODO include and use reactstrap for styling components or other styling library
   return (
     <div>
       <Link to={`companies/${company.handle}`}>{company.handle}</Link>

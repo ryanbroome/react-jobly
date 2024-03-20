@@ -1,26 +1,17 @@
-// TODO see note below in the return statement, need to move the redirect logic out of the return statement so it does not depend on the component rendering.
-// todo Will need to adjust the redirect also for CompanyList and JobList components as well as any other components using this same approach. Will need to double check and finish prior to moving on to Step Seven.
-
 import React, { useEffect, useState, useContext } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import JobCard from "./JobCard";
 import userContext from "./userContext";
 
 import JoblyApi from "./api/Api";
 
-// * How come is isn't working to re-direct the way i did in the other components.
-
 function CompanyDetail() {
   const history = useHistory();
-  const { validUser, token } = useContext(userContext);
-
-  // use URL handle to make API request
+  const { token } = useContext(userContext);
   const { handle } = useParams();
 
-  // state to hold company data
   const [company, setCompany] = useState(null);
 
-  // fetches data on initial load for company
   useEffect(
     function fetchCompanyWhenMounted() {
       async function fetchCompany() {
@@ -33,7 +24,6 @@ function CompanyDetail() {
       }
       fetchCompany();
     },
-    // add or remove handle to run when handle changes or not
     [handle]
   );
 

@@ -1,13 +1,15 @@
-import React, { useState, useContext, useEffect } from "react";
-import { FormGroup, Form, Input, Label, Button } from "reactstrap";
+import React, { useState, useContext } from "react";
+import { FormGroup } from "reactstrap";
 import userContext from "./userContext";
 
-const ProfileForm = ({ userInfo, update }) => {
+import { useHistory } from "react-router-dom";
+
+const ProfileForm = ({ update }) => {
   const { userDetails } = useContext(userContext);
-  // const { validUser, token, userDetails } = useContext(userContext);
+
+  const history = useHistory();
 
   let INITIAL_STATE = {
-    username: userDetails.username,
     firstName: userDetails.firstName,
     lastName: userDetails.lastName,
     email: userDetails.email,
@@ -25,14 +27,10 @@ const ProfileForm = ({ userInfo, update }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = JSON.stringify({ ...formData });
-    console.log("DATA", data);
-    update(formData.username, formData.firstName, formData.lastName, formData.email);
-    console.log("PROFILE FORM SUBMITTED:", { ...formData });
-
+    update(userDetails.username, formData.firstName, formData.lastName, formData.email);
     setFormData(INITIAL_STATE);
-    // !
-    // history.push(`/`);
+    // *currently the form input values don't update immediately when form submitted, redirect to home page, if user goes back it will be correct
+    history.push(`/`);
   };
 
   return (

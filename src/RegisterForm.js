@@ -1,11 +1,8 @@
-// TODO Complete for signup. Recall that signup is in another exercise or submission. We are just looking to check the DB for a user, if not there add them to db and return a JSON auth token.
-
 import React, { useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { FormGroup, Form, Input, Label, Button } from "reactstrap";
+import { useHistory } from "react-router-dom";
+import { FormGroup } from "reactstrap";
 
 const RegisterForm = ({ signup }) => {
-  // const {variable} = useParams()
   const history = useHistory();
 
   const INITIAL_STATE = {
@@ -29,11 +26,8 @@ const RegisterForm = ({ signup }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // signup method passed down from App
     signup(formData.username, formData.firstName, formData.lastName, formData.password, formData.email);
-    // reset form data after passdown state method executed
     setFormData(INITIAL_STATE);
-    // Do I need to redirect?
     history.push(`/`);
   };
 
