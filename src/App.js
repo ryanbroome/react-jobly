@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import { useHistory } from "react-router-dom";
 
 import "./App.css";
-
 import Routes from "./Routes";
 import Navigation from "./Navigation";
 import JoblyApi from "./api/Api";
@@ -11,9 +11,12 @@ import userContext from "./userContext";
 // Token is used to verify around the site
 // TODO change from token to validUser to verify around the Application
 function App() {
+  const history = useHistory();
   const [token, setToken] = useState(() => localStorage.getItem("token") || null);
   const [validUser, setValidUser] = useState(() => JSON.parse(localStorage.getItem("validUser")) || null);
   const [userDetails, setUserDetails] = useState(() => JSON.parse(localStorage.getItem("userDetails")) || null);
+
+  JoblyApi.token = token;
 
   const handleDetails = async (username) => {
     try {
@@ -58,12 +61,12 @@ function App() {
 
   const handleUpdate = async (username, firstName, lastName, email) => {
     try {
-      //* res coming back is {...user}
-      const res = await JoblyApi.updateUser(username, { username, firstName, lastName, email });
-      console.log("handleUpdate => res", res);
-
-      setValidUser(res);
-      localStorage.setItem("userDetails", JSON.stringify(res));
+      const res = await JoblyApi.updateUser(username, { firstName, lastName, email });
+      console.log("APP handleUpdate => res", res);
+      setUserDetails(res.user);
+      setValidUser(res.user);
+      localStorage.setItem("userDetails", JSON.stringify(res.user));
+      localStorage.setItem("validUser", JSON.stringify(res.user));
     } catch (err) {
       console.log(err);
     }
@@ -71,9 +74,12 @@ function App() {
 
   const handleLogout = () => {
     setToken(null);
+    setUserDetails(null);
+    setValidUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("validUser");
     localStorage.removeItem("userDetails");
+    history.push(`/`);
   };
 
   return (

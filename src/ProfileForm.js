@@ -1,13 +1,12 @@
-import React, { useState, useContext } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
 import { FormGroup, Form, Input, Label, Button } from "reactstrap";
 import userContext from "./userContext";
 
 const ProfileForm = ({ userInfo, update }) => {
-  const { validUser, token, userDetails } = useContext(userContext);
-  console.log("validUser:", validUser);
+  const { userDetails } = useContext(userContext);
+  // const { validUser, token, userDetails } = useContext(userContext);
 
-  const INITIAL_STATE = {
+  let INITIAL_STATE = {
     username: userDetails.username,
     firstName: userDetails.firstName,
     lastName: userDetails.lastName,
@@ -26,9 +25,11 @@ const ProfileForm = ({ userInfo, update }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //
-    update({ ...formData });
+    const data = JSON.stringify({ ...formData });
+    console.log("DATA", data);
+    update(formData.username, formData.firstName, formData.lastName, formData.email);
     console.log("PROFILE FORM SUBMITTED:", { ...formData });
+
     setFormData(INITIAL_STATE);
     // !
     // history.push(`/`);
