@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { FormGroup, Form, Input, Label, Button } from "reactstrap";
 
-const RegisterForm = ({ register }) => {
+const RegisterForm = ({ signup }) => {
   // const {variable} = useParams()
   const history = useHistory();
 
@@ -29,9 +29,9 @@ const RegisterForm = ({ register }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    register(formData.username, formData.firstName, formData.lastName, formData.password, formData.email);
-    console.log("REGISTER  FORM SUBMITTED:", { ...formData });
-
+    // signup method passed down from App
+    signup(formData.username, formData.firstName, formData.lastName, formData.password, formData.email);
+    // reset form data after passdown state method executed
     setFormData(INITIAL_STATE);
     // Do I need to redirect?
     history.push(`/`);
@@ -39,7 +39,7 @@ const RegisterForm = ({ register }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>Signup / Register Page</h3>
+      <h3>Signup / signup Page</h3>
       {Object.keys(INITIAL_STATE).map((val) => (
         <FormGroup key={`FormGroup-${val}`}>
           <label

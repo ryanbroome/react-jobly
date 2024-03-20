@@ -1,19 +1,17 @@
-// TODO Complete for signup. Recall that signup is in another exercise or submission. We are just looking to check the DB for a user, if not there add them to db and return a JSON auth token.
-// todo WHAT COULD I DO TO MAKE THIS FORM A RE-USABLE COMPONENT?
-// todo WHAT IS NEEDED? {Object(INITIAL_STATE), String("Title")}
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { FormGroup, Form, Input, Label, Button } from "reactstrap";
+import userContext from "./userContext";
 
-const ProfileForm = (props) => {
-  // const {urlParam} = useParams()
-  const history = useHistory();
+const ProfileForm = ({ userInfo, update }) => {
+  const { validUser, token, userDetails } = useContext(userContext);
+  console.log("validUser:", validUser);
 
   const INITIAL_STATE = {
-    username: "",
-    firstName: "",
-    lastName: "",
-    email: "",
+    username: userDetails.username,
+    firstName: userDetails.firstName,
+    lastName: userDetails.lastName,
+    email: userDetails.email,
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
@@ -28,7 +26,8 @@ const ProfileForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateStateMethod({...formData})
+    //
+    update({ ...formData });
     console.log("PROFILE FORM SUBMITTED:", { ...formData });
     setFormData(INITIAL_STATE);
     // !
@@ -37,7 +36,7 @@ const ProfileForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>Profile</h3>
+      <h3>Profile Form</h3>
       {Object.keys(INITIAL_STATE).map((val) => (
         <FormGroup key={`FormGroup-${val}`}>
           <label

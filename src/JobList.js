@@ -8,8 +8,7 @@ import userContext from "./userContext";
 
 function JobList() {
   const history = useHistory();
-  const { validUser } = useContext(userContext);
-
+  const { validUser, token } = useContext(userContext);
   const [jobs, setJobs] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
 
@@ -21,7 +20,7 @@ function JobList() {
         console.log("useEffect JOBS searchTerm", searchTerm);
         setJobs(filteredRes);
       }
-      filterJobs(searchTerm);
+      filterJobs();
     },
     [searchTerm]
   );
@@ -33,26 +32,26 @@ function JobList() {
 
   // *method to reset to all jobs
   const resetList = () => {
-    setSearchTerm("");
+    setSearchTerm(null);
   };
 
-  return (
-    <div>
-      {validUser ? (
-        <div className="JobList">
-          <h1>Jobs List</h1>
-          <SearchForm
-            search={searchJobs}
-            resetList={resetList}
-          />
-          <button onClick={resetList}>Reset</button>
-          {jobs ? <JobCardList jobs={jobs} /> : <i>No Jobs found</i>}
-        </div>
-      ) : (
-        history.push("/")
-      )}
-    </div>
-  );
+  // validUser ? return
+  if (!token) {
+    history.push("/");
+    return null;
+  } else {
+    return (
+      <div className="JobList">
+        <h1>Jobs List</h1>
+        <SearchForm
+          search={searchJobs}
+          resetList={resetList}
+        />
+        <button onClick={resetList}>Reset</button>
+        {jobs ? <JobCardList jobs={jobs} /> : <i>No Jobs found</i>}
+      </div>
+    );
+  }
 }
 
 export default JobList;

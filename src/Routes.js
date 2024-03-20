@@ -9,21 +9,25 @@ import Stage from "./Stage";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import ProfileForm from "./ProfileForm";
+
 import NotFound from "./NotFound";
 // import userContext from "./userContext";
 
 const Routes = (props) => {
   // const { validUser } = useContext(userContext);
+
   return (
     <Switch>
-      {/* HomePage Route */}
+      {/* HomePage  */}
       <Route
         exact
         path="/">
         <HomePage />
       </Route>
 
-      {/* Companies Route's */}
+      {/* Protected Start */}
+
+      {/* Companies  */}
       <Route
         exact
         path="/companies">
@@ -36,28 +40,28 @@ const Routes = (props) => {
         <CompanyDetail />
       </Route>
 
-      {/* Jobs Routes */}
+      {/* Jobs  */}
       <Route
         exact
         path="/jobs">
         <JobList />
       </Route>
 
-      {/* Profile Routes */}
+      {/* Profile  */}
       <Route
         exact
         path="/profile">
-        <ProfileForm />
+        <ProfileForm update={props.update} />
       </Route>
 
-      {/* Stage / Practice routes */}
+      {/* Stage / Practice  */}
       <Route
         exact
         path="/stage">
         <Stage />
       </Route>
 
-      {/* Auth routes */}
+      {/* Auth  */}
       <Route
         exact
         path="/login">
@@ -67,9 +71,9 @@ const Routes = (props) => {
       <Route
         exact
         path="/signup">
-        <RegisterForm register={props.register} />
+        <RegisterForm signup={props.signup} />
       </Route>
-
+      {/* CatchAll NotFound */}
       <Route>
         <NotFound />
       </Route>

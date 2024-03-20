@@ -15,7 +15,7 @@ import userContext from "./userContext";
  * **/
 
 function Navigation({ logout }) {
-  const { validUser } = useContext(userContext);
+  const { validUser, token } = useContext(userContext);
 
   return (
     <>
@@ -33,7 +33,7 @@ function Navigation({ logout }) {
             </NavLink>
           </NavItem>
 
-          {validUser ? (
+          {token ? (
             <>
               <NavItem>
                 <NavLink
@@ -61,10 +61,9 @@ function Navigation({ logout }) {
               <button
                 className="Navigation-Logout"
                 onClick={logout}>
-                {" "}
                 Logout
               </button>
-              <h5>{validUser.username}</h5>
+              {/* <h5>{validUser.username}</h5> */}
             </>
           ) : (
             <>
@@ -92,3 +91,5 @@ function Navigation({ logout }) {
 }
 
 export default Navigation;
+
+// todo ? How do I know which logic is ok to put in a render / return method in React component?
