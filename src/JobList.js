@@ -8,18 +8,21 @@ import userContext from "./userContext";
 
 function JobList() {
   const history = useHistory();
-  const { token, apply } = useContext(userContext);
-
+  const { token } = useContext(userContext);
   const [jobs, setJobs] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
 
   useEffect(
     function fetchJobs() {
-      async function filterJobs() {
-        const filteredRes = await JoblyApi.searchJobs(searchTerm);
-        setJobs(filteredRes);
+      try {
+        async function filterJobs() {
+          const filteredRes = await JoblyApi.searchJobs(searchTerm);
+          setJobs(filteredRes);
+        }
+        filterJobs();
+      } catch (err) {
+        console.log(err);
       }
-      filterJobs();
     },
     [searchTerm]
   );
@@ -43,7 +46,6 @@ function JobList() {
           search={searchJobs}
           resetList={resetList}
         />
-        <button onClick={resetList}>Reset</button>
         {jobs ? <JobCardList jobs={jobs} /> : <i>No Jobs found</i>}
       </div>
     );

@@ -45,14 +45,12 @@ function CompanyList() {
   } else
     return (
       <div>
-        <h1 className="CompanyList">Companies List for</h1>
         <SearchForm
           search={searchCompanies}
           resetList={resetList}
         />
         {companies ? (
           <div>
-            <button onClick={resetList}>Reset</button>
             {companies.map((company) => (
               <CompanyCard
                 company={company}

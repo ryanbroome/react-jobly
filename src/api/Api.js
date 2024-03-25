@@ -28,6 +28,7 @@ class JoblyApi {
     } catch (err) {
       console.error("API Error:", err.response);
       let message = err.response.data.error.message;
+
       throw Array.isArray(message) ? message : [message];
     }
   }
@@ -62,8 +63,12 @@ class JoblyApi {
 
   /**Get filtered list of companies */
   static async searchJobs(searchTerm = "") {
-    let res = await this.request(`jobs`, { title: searchTerm });
-    return res.jobs;
+    try {
+      let res = await this.request(`jobs`, { title: searchTerm });
+      return res.jobs;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   // Get Job By id
@@ -92,13 +97,13 @@ class JoblyApi {
   // Get user by username
   static async getUser(username) {
     let res = await this.request(`users/${username}`, "get");
-    console.log("API CALL getUser => this.token", this.token);
     return res;
   }
 
   // Apply to a job
   static async applyToJob(username, id) {
-    const res = await this.request(`users/${username}/jobs/${id}`, { username, id }, "POST");
+    // const res = await this.request(`users/${username}/jobs/${id}`, { username, id }, "post");
+    const res = await this.request(`users/${username}/jobs/${id}`, {}, "POST");
     return res;
   }
 }

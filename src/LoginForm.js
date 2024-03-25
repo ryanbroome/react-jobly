@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { FormGroup } from "reactstrap";
+import { FormGroup, Form, Input, Label, Button } from "reactstrap";
 
 const LoginForm = ({ login }) => {
   const history = useHistory();
@@ -28,27 +28,26 @@ const LoginForm = ({ login }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Login Page</h3>
-      {Object.keys(INITIAL_STATE).map((val) => (
+    <Form onSubmit={handleSubmit}>
+      <h3 style={{ marginTop: "25px", marginRight: "25px" }}>Login</h3>
+      {Object.keys(INITIAL_STATE).map((val, idx) => (
         <FormGroup key={`FormGroup-${val}`}>
-          <label
+          <Label
             htmlFor={val}
-            key={`Label-{idx}`}>
-            {val}
-          </label>
-          <input
+            key={`Label-${idx}`}></Label>
+          <Input
             id={val}
             key={`Input-${val}`}
-            type="text"
+            type={val !== "email" ? "text" : "email"}
             name={val}
             placeholder={val.toLowerCase()}
             value={formData[val]}
-            onChange={handleChange}></input>
+            onChange={handleChange}></Input>
         </FormGroup>
       ))}
-      <button>Login</button>
-    </form>
+
+      <Button color="primary">Login</Button>
+    </Form>
   );
 };
 

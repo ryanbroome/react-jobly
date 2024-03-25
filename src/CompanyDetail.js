@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import JobCard from "./JobCard";
 import userContext from "./userContext";
-
+import { Card, CardBody, CardTitle, CardSubtitle, ListGroup, ListGroupItem, CardText } from "reactstrap";
 import JoblyApi from "./api/Api";
 
 function CompanyDetail() {
@@ -27,39 +27,52 @@ function CompanyDetail() {
     [handle]
   );
 
-  return (
-    <div>
-      {token ? (
-        <div className="CompanyDetail">
-          {company ? (
-            <div>
-              <dl>
-                <dt>Company</dt>
-                <dd>{company.name}</dd>
-                <dt>Employees</dt>
-                <dd>{company.numEmployees}</dd>
-                <dt>Description</dt>
-                <dd>{company.description}</dd>
-              </dl>
+  // render JSX methods
+  function showCompanyIfToken(company) {
+    return (
+      <div className="CompanyDetail">
+        {company ? (
+          <Card
+            color="light"
+            body
+            className="text-center">
+            <CardBody>
+              <CardTitle tag="h3">{company.name}</CardTitle>
+              <CardSubtitle></CardSubtitle>
+              <CardText>{company.description}</CardText>
+              <ListGroup flush>
+                <ListGroupItem key="CompanyDetail-employees">Employees: {company.numEmployees}</ListGroupItem>
+              </ListGroup>
               {company.jobs.length > 0 ? (
-                <ul>
-                  {company.jobs.map((j) => (
-                    <JobCard job={j} />
+                <ListGroup flush>
+                  {company.jobs.map((j, i) => (
+                    <ListGroupItem key={`CompanyDetail-JobList-${i}`}>
+                      <JobCard
+                        job={j}
+                        key={j.id}
+                      />
+                    </ListGroupItem>
                   ))}
-                </ul>
+                </ListGroup>
               ) : (
                 "This company is not currently hiring or does not have any jobs listed"
               )}
-            </div>
-          ) : (
-            "Loading Company"
-          )}
-        </div>
-      ) : (
-        history.push("/")
-      )}
-    </div>
-  );
+            </CardBody>
+          </Card>
+        ) : (
+          "Loading Spinner"
+        )}
+      </div>
+    );
+  }
+
+  // render null and redirect
+  function redirectIfNoToken() {
+    history.push("/");
+    return null;
+  }
+
+  return token ? showCompanyIfToken(company) : redirectIfNoToken();
 }
 
 export default CompanyDetail;

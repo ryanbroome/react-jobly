@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
-import { FormGroup } from "reactstrap";
-import userContext from "./userContext";
-
 import { useHistory } from "react-router-dom";
+import userContext from "./userContext";
+import ProfileCard from "./ProfileCard";
+import { FormGroup, Form, Input, Label, Button } from "reactstrap";
 
 const ProfileForm = ({ update }) => {
   const { userDetails } = useContext(userContext);
@@ -29,32 +29,34 @@ const ProfileForm = ({ update }) => {
     e.preventDefault();
     update(userDetails.username, formData.firstName, formData.lastName, formData.email);
     setFormData(INITIAL_STATE);
-    // *currently the form input values don't update immediately when form submitted, redirect to home page, if user goes back it will be correct
     history.push(`/`);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Profile Form</h3>
-      {Object.keys(INITIAL_STATE).map((val) => (
-        <FormGroup key={`FormGroup-${val}`}>
-          <label
-            htmlFor={val}
-            key={`Label-{idx}`}>
-            {val}
-          </label>
-          <input
-            id={val}
-            key={`Input-${val}`}
-            type="text"
-            name={val}
-            placeholder={val.toLowerCase()}
-            value={formData[val]}
-            onChange={handleChange}></input>
-        </FormGroup>
-      ))}
-      <button style={{ color: "black", backgroundColor: "coral" }}>Update</button>
-    </form>
+    <>
+      <ProfileCard user={userDetails} />
+      <Form onSubmit={handleSubmit}>
+        {Object.keys(INITIAL_STATE).map((val, idx) => (
+          <FormGroup key={`FormGroup-${val}`}>
+            <Label
+              htmlFor={val}
+              key={`Label-${idx}`}>
+              {val}
+            </Label>
+            <Input
+              id={val}
+              key={`Input-${val}`}
+              type={val !== "email" ? "text" : "email"}
+              name={val}
+              placeholder={val.toLowerCase()}
+              value={formData[val]}
+              onChange={handleChange}></Input>
+          </FormGroup>
+        ))}
+
+        <Button color="primary">Update</Button>
+      </Form>
+    </>
   );
 };
 

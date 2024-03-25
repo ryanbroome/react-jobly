@@ -1,0 +1,16 @@
+
+App.js
+
+todo 1 
+    update JSX return statements. Can make functions like isLoggedIn() that returns JSX you want to see when someone is logged in and loggedOut() that just returns JSX you want to see when no valid user is present in context pieces of state
+
+todo 
+    lift state up from JobCard to JobList or JobCardList, state of whether is applied to or not seems should be kept higher up and passed down as a prop
+
+JobCard.js
+    Raise the state up, when i change the state we want to trigger a re-render of the entire list. Then we can render each JobCard with the job to fill the details view and some logic to check whether each job.id is in the list of applied to ids already we will render each JobCard Component with a property for whether it's applied to or not
+
+    Already Applied Button , the only thing should change is the color, but my setup will break if clicked and already applied, how could I do that, deactivate button, or do error handling on already applied?
+
+Navigation.js
+    How do I know which logic is ok to put in a render / return method in React component?

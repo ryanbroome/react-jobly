@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { FormGroup } from "reactstrap";
-import "./SearchForm.css";
 
-const SearchForm = ({ search }) => {
+import "./SearchForm.css";
+import { FormGroup, Form, Col, Input, Button } from "reactstrap";
+
+const SearchForm = ({ search, resetList }) => {
   const INITIAL_STATE = {
     searchTerm: "",
   };
@@ -24,27 +25,31 @@ const SearchForm = ({ search }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Search</h3>
-      {Object.keys(INITIAL_STATE).map((val) => (
-        <FormGroup key={`FormGroup-${val}`}>
-          <label
-            htmlFor={val}
-            key={`Label-{idx}`}>
-            {val}
-          </label>
-          <input
-            id={val}
-            key={`Input-${val}`}
-            type="text"
-            name={val}
-            placeholder={val.toLowerCase()}
-            value={formData[val]}
-            onChange={handleChange}></input>
-        </FormGroup>
+    <Form onSubmit={handleSubmit}>
+      {Object.keys(INITIAL_STATE).map((val, idx) => (
+        <Col
+          md={10}
+          key={`Col-${idx}`}>
+          <FormGroup key={`FormGroup-${val}`}>
+            <Input
+              id={val}
+              key={`Input-${val}`}
+              type={val !== "email" ? "text" : "email"}
+              name={val}
+              placeholder={val.toLowerCase()}
+              value={formData[val]}
+              onChange={handleChange}></Input>
+          </FormGroup>
+        </Col>
       ))}
-      <button>Search</button>
-    </form>
+
+      <Button color="primary">Search</Button>
+      <Button
+        color="danger"
+        onClick={resetList}>
+        Reset
+      </Button>
+    </Form>
   );
 };
 

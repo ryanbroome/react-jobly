@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import "./Navigation.css";
+
 import { NavLink } from "react-router-dom";
-import { Navbar, Nav, NavItem } from "reactstrap";
 import userContext from "./userContext";
+
+import { Nav, NavItem, Button } from "reactstrap";
 
 /**Navigation Component to render a NavBar, different Items rendered based on if logged in user present
  *
@@ -10,92 +11,103 @@ import userContext from "./userContext";
 const Navigation = ({ logout }) => {
   const { token } = useContext(userContext);
 
+  //method for JSX to return when valid token present in userContext
   function isLoggedIn() {
     return (
-      <Navbar expand="md">
-        <Nav
-          className="ml-auto"
-          navbar>
-          <NavItem>
-            <NavLink
-              exact
-              to="/"
-              className="navbar-brand">
-              Jobly
-            </NavLink>
-          </NavItem>
+      <Nav
+        justified
+        pills>
+        <NavItem>
+          <NavLink
+            exact
+            to="/"
+            className="nav-link"
+            activeClassName="active">
+            Home
+          </NavLink>
+        </NavItem>
 
-          <NavItem>
-            <NavLink
-              exact
-              to="/profile">
-              Profile
-            </NavLink>
-          </NavItem>
+        <NavItem>
+          <NavLink
+            exact
+            to="/profile"
+            className="nav-link"
+            activeClassName="active">
+            Profile
+          </NavLink>
+        </NavItem>
 
-          <NavItem>
-            <NavLink
-              exact
-              to="/companies">
-              Companies
-            </NavLink>
-          </NavItem>
+        <NavItem>
+          <NavLink
+            exact
+            to="/companies"
+            className="nav-link"
+            activeClassName="active">
+            Companies
+          </NavLink>
+        </NavItem>
 
-          <NavItem>
-            <NavLink
-              exact
-              to="/jobs">
-              Jobs
-            </NavLink>
-          </NavItem>
-          <button
-            className="Navigation-Logout"
-            onClick={logout}>
+        <NavItem>
+          <NavLink
+            exact
+            to="/jobs"
+            className="nav-link"
+            activeClassName="active">
+            Jobs
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <Button
+            color="danger"
+            onClick={logout}
+            size="sm">
             Logout
-          </button>
-        </Nav>
-      </Navbar>
+          </Button>
+        </NavItem>
+      </Nav>
     );
   }
 
-  function loggedOut() {
+  // JSX to return when no valid token present in userContext
+  function isLoggedOut() {
     return (
-      <Navbar expand="md">
-        <Nav
-          className="ml-auto"
-          navbar>
-          <NavItem>
-            <NavLink
-              exact
-              to="/"
-              className="navbar-brand">
-              Jobly
-            </NavLink>
-          </NavItem>
+      <Nav
+        justified
+        pills>
+        <NavItem>
+          <NavLink
+            exact
+            to="/"
+            className="nav-link"
+            activeClassName="active">
+            Jobly - Home
+          </NavLink>
+        </NavItem>
 
-          <NavItem>
-            <NavLink
-              exact
-              to="/login">
-              🔐 Login
-            </NavLink>
-          </NavItem>
+        <NavItem>
+          <NavLink
+            exact
+            to="/login"
+            className="nav-link"
+            activeClassName="active">
+            Login
+          </NavLink>
+        </NavItem>
 
-          <NavItem>
-            <NavLink
-              exact
-              to="/signup">
-              Signup
-            </NavLink>
-          </NavItem>
-        </Nav>
-      </Navbar>
+        <NavItem>
+          <NavLink
+            exact
+            to="/signup"
+            className="nav-link"
+            activeClassName="active">
+            Signup
+          </NavLink>
+        </NavItem>
+      </Nav>
     );
   }
 
-  return token ? isLoggedIn() : loggedOut();
+  return token ? isLoggedIn() : isLoggedOut();
 };
 
 export default Navigation;
-
-// todo ? How do I know which logic is ok to put in a render / return method in React component?

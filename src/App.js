@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useHistory } from "react-router-dom";
 
-import "./App.css";
+// import "./App.css";
 import Routes from "./Routes";
 import Navigation from "./Navigation";
 import JoblyApi from "./api/Api";
 import userContext from "./userContext";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+
 function App() {
   const history = useHistory();
+
   const [token, setToken] = useState(() => localStorage.getItem("token") || null);
   const [validUser, setValidUser] = useState(() => JSON.parse(localStorage.getItem("validUser")) || null);
   const [userDetails, setUserDetails] = useState(() => JSON.parse(localStorage.getItem("userDetails")) || null);
-  const [appliedJobs, setAppliedJobs] = useState(() => JSON.parse(localStorage.getItem("appliedJobs")) || null);
+  const [appliedJobIdsForThisUser, setAppliedJobIdsForThisUser] = useState(() => JSON.parse(localStorage.getItem("appliedJobIdsForThisUser")) || []);
 
   JoblyApi.token = token;
 
@@ -22,7 +25,7 @@ function App() {
       const res = await JoblyApi.getUser(username);
       setUserDetails({ ...res.user });
       localStorage.setItem("userDetails", JSON.stringify({ ...res.user }));
-      console.log("APP =>  => handleDetails(username)", { ...res.user });
+      localStorage.setItem("appliedJobIdsForThisUser", JSON.stringify([...res.user.jobs]));
     } catch (err) {
       console.log(err);
     }
@@ -38,7 +41,7 @@ function App() {
       localStorage.setItem("validUser", JSON.stringify(jwtDecode(res)));
       handleDetails(username);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -75,28 +78,31 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("validUser");
     localStorage.removeItem("userDetails");
+    localStorage.removeItem("appliedJobIdsForThisUser");
     history.push(`/`);
   };
 
   const handleApply = async (username, id) => {
-    const res = await JoblyApi.applyToJob(username, id);
-    console.log(res);
-    if (res.applied) {
-      setAppliedJobs(new Set([...appliedJobs, res.applied]));
+    try {
+      // did not end up using res for anything
+      await JoblyApi.applyToJob(username, id);
+      // res returns a success message { "applied" : id }
+
+      setAppliedJobIdsForThisUser([...appliedJobIdsForThisUser, id]);
+      handleDetails(username);
+    } catch (err) {
+      console.log(err);
     }
-    console.log("App => handleApply => res.applied", res.applied);
-    localStorage.setItem("appliedJobs", appliedJobs);
   };
 
   return (
     <div className="App">
-      <userContext.Provider value={{ validUser, token, userDetails }}>
+      <userContext.Provider value={{ validUser, token, userDetails, handleApply }}>
         <Navigation logout={handleLogout} />
         <Routes
           login={handleLogin}
           signup={handleSignup}
           update={handleUpdate}
-          apply={handleApply}
         />
       </userContext.Provider>
     </div>
@@ -104,6 +110,3 @@ function App() {
 }
 
 export default App;
-// * TODO LEFT OFF WORKING ON APPLY TO JOBS , APPLY SHOULD BE IN CONTEXT BUT ISN"T MAKING IT TO JobCard
-// TODO
-// todo 1 update JSX return statements. Can make functions like isLoggedIn() that returns JSX you want to see when someone is logged in and loggedOut() that just returns JSX you want to see when no valid user is present in context pieces of state

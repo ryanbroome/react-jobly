@@ -1,8 +1,7 @@
-input {
-    color: black;
-}
-
-button {
-    color: black;
-    background-color: coral;
+form {
+    display: flex;
+    margin-left: 10vw;
+    position: sticky;
+    top: 0px;
+    z-index: 1;
 }

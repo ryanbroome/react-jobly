@@ -34,7 +34,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/jobs">
-        <JobList apply={props.apply} />
+        <JobList />
       </Route>
 
       <Route
