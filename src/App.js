@@ -34,15 +34,22 @@ function App() {
   const handleLogin = async (username, password) => {
     try {
       const res = await JoblyApi.validateUser(username, password);
-      setToken(res);
-      console.log("handleLogin res=>", res);
-      setValidUser(() => {
-        return jwtDecode(res);
-      });
-      JoblyApi.token = res;
-      localStorage.setItem("token", res);
-      localStorage.setItem("validUser", JSON.stringify(jwtDecode(res)));
-      handleDetails(username);
+      async function loadData(res) {
+        setToken(res);
+        console.log("handleLogin res=>", res);
+        JoblyApi.token = res;
+        localStorage.setItem("token", res);
+        localStorage.setItem("validUser", JSON.stringify(jwtDecode(res)));
+        handleDetails(username);
+        setValidUser(() => {
+          return jwtDecode(res);
+        });
+      }
+      await loadData(res);
+      // setToken(res);
+      // setValidUser(() => {
+      //   return jwtDecode(res);
+      // });
     } catch (err) {
       console.error(err);
     }
