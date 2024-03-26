@@ -35,6 +35,7 @@ function App() {
     try {
       const res = await JoblyApi.validateUser(username, password);
       setToken(res);
+      console.log("handleLogin res=>", res);
       setValidUser(jwtDecode(res));
       JoblyApi.token = res;
       localStorage.setItem("token", res);
