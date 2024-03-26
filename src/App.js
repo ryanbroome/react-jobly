@@ -35,11 +35,11 @@ function App() {
     try {
       const res = await JoblyApi.validateUser(username, password);
       console.log("handleLogin res=>", res);
-      // setValidUser(await jwtDecode(res));
+      setValidUser(await jwtDecode(res));
       setToken(res);
       JoblyApi.token = res;
       localStorage.setItem("token", res);
-      // localStorage.setItem("validUser", JSON.stringify(jwtDecode(res)));
+      localStorage.setItem("validUser", JSON.stringify(jwtDecode(res)));
       handleDetails(username);
     } catch (err) {
       console.error(err);
@@ -50,10 +50,10 @@ function App() {
     try {
       const res = await JoblyApi.registerUser(username, firstName, lastName, password, email);
       setToken(res);
-      // setValidUser(jwtDecode(res));
+      setValidUser(await jwtDecode(res));
       JoblyApi.token = res;
       localStorage.setItem("token", res);
-      // localStorage.setItem("validUser", JSON.stringify(jwtDecode(res)));
+      localStorage.setItem("validUser", JSON.stringify(jwtDecode(res)));
       handleDetails(username);
     } catch (err) {
       console.log(err);
