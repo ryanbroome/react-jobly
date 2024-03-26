@@ -39,7 +39,7 @@ function App() {
       setToken(res);
       JoblyApi.token = res;
       localStorage.setItem("token", res);
-      localStorage.setItem("validUser", JSON.stringify(jwtDecode(res)));
+      localStorage.setItem("validUser", JSON.stringify(await jwtDecode(res)));
       handleDetails(username);
     } catch (err) {
       console.error(err);
@@ -53,7 +53,7 @@ function App() {
       setValidUser(await jwtDecode(res));
       JoblyApi.token = res;
       localStorage.setItem("token", res);
-      localStorage.setItem("validUser", JSON.stringify(jwtDecode(res)));
+      localStorage.setItem("validUser", JSON.stringify(await jwtDecode(res)));
       handleDetails(username);
     } catch (err) {
       console.log(err);
