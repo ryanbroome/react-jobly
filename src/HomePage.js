@@ -2,11 +2,13 @@ import React, { useContext } from "react";
 
 import userContext from "./userContext";
 
+import { Spinner } from "reactstrap";
+
 const HomePage = () => {
   const { validUser, token } = useContext(userContext);
 
-  if (!token) {
-    return (
+  function isLoggedIn() {
+    return token ? (
       <div>
         <h3>{validUser ? validUser.username : "Check out the Signup page or Login"}</h3>
         <img
@@ -16,9 +18,17 @@ const HomePage = () => {
           height="600px"
         />
       </div>
+    ) : (
+      <Spinner
+        color="primary"
+        size="">
+        Loading...
+      </Spinner>
     );
-  } else
-    return (
+  }
+
+  function isLoggedOut() {
+    return token ? (
       <div>
         <h3>Welcome {validUser ? validUser.username : "Well something must be broken if your seeing this"}</h3>
         <img
@@ -28,7 +38,15 @@ const HomePage = () => {
           height="600px"
         />
       </div>
+    ) : (
+      <Spinner
+        color="primary"
+        size="">
+        Loading...
+      </Spinner>
     );
+  }
+  return token ? isLoggedIn() : isLoggedOut();
 };
 
 export default HomePage;
