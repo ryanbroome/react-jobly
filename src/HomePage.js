@@ -40,18 +40,24 @@ const HomePage = () => {
       </div>
     ) : (
       <div>
-        <h3>Welcome {validUser ? validUser.username : "Well something must be broken if your seeing this"}</h3>
+        <h3>
+          Welcome{" "}
+          {validUser ? (
+            validUser.username
+          ) : (
+            <div
+              class="spinner-border"
+              role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          )}
+        </h3>
         <img
           alt="Sample"
           src={require("../src/images/jobly_logo.jpg")}
           width="100%"
           height="600px"
         />
-        <div
-          class="spinner-border"
-          role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
       </div>
     );
   }
