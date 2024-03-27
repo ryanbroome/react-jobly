@@ -32,15 +32,14 @@ const HomePage = () => {
       <div>
         <h3>
           Welcome{" "}
-          {validUser ? (
-            validUser.username
-          ) : (
-            <div
-              class="spinner-border"
-              role="status">
-              <span class="visually-hidden"></span>
-            </div>
-          )}
+          {validUser
+            ? validUser.username
+            : "" // <div
+              //   class="spinner-border"
+              //   role="status">
+              //   <span class="visually-hidden"></span>
+              // </div>
+          }
         </h3>
         <img
           alt="Sample"
