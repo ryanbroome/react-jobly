@@ -54,7 +54,7 @@ const HomePage = () => {
           {validUser ? (
             validUser.username
           ) : (
-            <div>""</div>
+            <div></div>
             // <div
             //   class="spinner-border"
             //   role="status">
