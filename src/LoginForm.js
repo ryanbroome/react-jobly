@@ -24,6 +24,7 @@ const LoginForm = ({ login }) => {
     e.preventDefault();
     login(formData.username, formData.password);
     setFormData(INITIAL_STATE);
+    // *redirect to where when form submitted right now is home?
     history.push(`/`);
   };
 

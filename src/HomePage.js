@@ -32,13 +32,12 @@ const HomePage = () => {
       <div>
         <h3>
           Welcome{" "}
-          {validUser
-            ? validUser.username
-            : "" // <div
-              //   class="spinner-border"
-              //   role="status">
-              //   <span class="visually-hidden"></span>
-              // </div>
+          {
+            validUser ? validUser.username : "" // <div
+            //   class="spinner-border"
+            //   role="status">
+            //   <span class="visually-hidden"></span>
+            // </div>
           }
         </h3>
         <img
@@ -55,11 +54,12 @@ const HomePage = () => {
           {validUser ? (
             validUser.username
           ) : (
-            <div
-              class="spinner-border"
-              role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
+            <div>""</div>
+            // <div
+            //   class="spinner-border"
+            //   role="status">
+            //   <span class="visually-hidden">Loading...</span>
+            // </div>
           )}
         </h3>
         <img
